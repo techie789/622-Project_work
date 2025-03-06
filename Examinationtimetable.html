@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Exam Timetable</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/plugins/jspdf-autotable/3.5.24/jspdf.plugin.autotable.min.js"></script>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #f8f9fa;
+            --dark: #1a1a2e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: #f0f2f5;
+            padding-top: 80px;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 60px;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary);
+            background: rgba(52, 152, 219, 0.1);
+        }
+
+        .menu-icon {
+            display: none;
+            cursor: pointer;
+        }
+
+        /* Main Content */
+        .main-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 20px;
+        }
+
+        /* Timetable Section */
+        .timetable-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+        }
+
+        .filter-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .filter-group {
+            position: relative;
+        }
+
+        .filter-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: var(--light);
+            appearance: none;
+        }
+
+        /* Timetable Table */
+        .timetable-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
+
+        .timetable-table th,
+        .timetable-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .timetable-table th {
+            background: var(--primary);
+            color: white;
+            position: sticky;
+            top: 80px;
+        }
+
+        /* Exam Info Cards */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .info-card {
+            background: var(--light);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--secondary);
+        }
+
+        /* PDF Button */
+        .pdf-section {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .pdf-btn {
+            background: var(--accent);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: transform 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pdf-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--primary);
+            color: white;
+            margin-top: 4rem;
+            padding: 4rem 2rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-section h3 {
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.8rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: var(--secondary);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        @media (max-width: 768px) {
+            .menu-icon {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 2rem;
+                text-align: center;
+                box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .timetable-table th {
+                position: static;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="https://via.placeholder.com/150x60.png?text=College+Logo" alt="College Logo">
+            </a>
+            <div class="nav-links">
+                <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                <a href="Results.html">Results</a>
+                 <a href="ContactUs.html">Contact Us</a>
+                   
+            </div>
+            <span class="menu-icon"><i class="fas fa-bars"></i></span>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <div class="timetable-card">
+            <h1 style="color: var(--primary); margin-bottom: 2rem;">Exam Timetable 2023-2024</h1>
+            
+            <!-- Filter Section -->
+            <div class="filter-section">
+                <div class="filter-group">
+                    <label>Select Course</label>
+                    <select id="courseSelect">
+                        <option>B.Tech Computer Science</option>
+                        <option>B.Sc Mathematics</option>
+                        <option>B.A Economics</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Select Semester</label>
+                    <select id="semesterSelect">
+                        <option>Semester I</option>
+                        <option>Semester II</option>
+                        <option>Supplementary</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Select Year</label>
+                    <select id="yearSelect">
+                        <option>First Year</option>
+                        <option>Second Year</option>
+                        <option>Third Year</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Info Cards -->
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-calendar-day"></i> Exam Dates</h3>
+                    <p>March 15, 2024 - April 10, 2024</p>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-clock"></i> Exam Timings</h3>
+                    <p>9:00 AM - 12:00 PM</p>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-map-marker-alt"></i> Exam Center</h3>
+                    <p>Main Campus Block A</p>
+                </div>
+            </div>
+
+            <!-- Timetable Table -->
+            <table class="timetable-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Subject Code</th>
+                        <th>Subject Name</th>
+                        <th>Time</th>
+                        <th>Room No.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2024-03-15</td>
+                        <td>CS101</td>
+                        <td>Introduction to Programming</td>
+                        <td>9:00 AM - 12:00 PM</td>
+                        <td>A-201</td>
+                    </tr>
+                    <!-- Add more rows -->
+                </tbody>
+            </table>
+
+            <!-- PDF Section -->
+            <div class="pdf-section">
+                <button class="pdf-btn" onclick="generatePDF()">
+                    <i class="fas fa-file-pdf"></i> Download Timetable
+                </button>
+            </div>
+        </div>
+
+        <!-- Exam Instructions -->
+        <div class="timetable-card" style="margin-top: 2rem;">
+            <h2 style="color: var(--primary); margin-bottom: 1.5rem;">Important Instructions</h2>
+            <ul style="list-style: none;">
+                <li style="padding: 0.8rem; border-bottom: 1px solid #eee;">
+                    <i class="fas fa-exclamation-circle" style="color: var(--accent);"></i>
+                    Carry valid college ID and hall ticket
+                </li>
+                <!-- Add more instructions -->
+            </ul>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="timetable.html">Exam Schedule</a></li>
+                    <li><a href="results.html">Results</a></li>
+                    <li><a href="admissions.html">Admissions</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <p><i class="fas fa-map-marker-alt"></i> College Road, Academic City</p>
+                <p><i class="fas fa-phone"></i> +91 12345 67890</p>
+                <p><i class="fas fa-envelope"></i> exams@college.edu</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3>Important Dates</h3>
+                <ul class="footer-links">
+                    <li>Last Date for Fees: Mar 10</li>
+                    <li>Practical Exams: Mar 20-25</li>
+                    <li>Result Declaration: May 15</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="copyright">
+            <p>    © 2025 CyberX_Company, Inc. All rights reserved.  </p>
+          
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const menuIcon = document.querySelector('.menu-icon');
+        const navLinks = document.querySelector('.nav-links');
+
+        menuIcon.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close menu on outside click
+        document.addEventListener('click', (e) => {
+            if (!navLinks.contains(e.target) && !menuIcon.contains(e.target)) {
+                navLinks.classList.remove('active');
+            }
+        });
+
+        // PDF Generation
+        function generatePDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            // Add college logo
+            const img = new Image();
+            img.src = 'https://via.placeholder.com/150x60.png?text=College+Logo';
+            doc.addImage(img, 'PNG', 14, 10, 40, 15);
+
+            // PDF Title
+            doc.setFontSize(16);
+            doc.text(`Exam Timetable - ${document.getElementById('courseSelect').value}`, 14, 40);
+
+            // Generate table
+            doc.autoTable({
+                html: '.timetable-table',
+                startY: 50,
+                theme: 'grid',
+                styles: { fontSize: 10 },
+                headStyles: { fillColor: [44, 62, 80] },
+                columnStyles: {
+                    0: { cellWidth: 25 },
+                    1: { cellWidth: 25 },
+                    2: { cellWidth: 60 },
+                    3: { cellWidth: 30 },
+                    4: { cellWidth: 20 }
+                }
+            });
+
+            // Save PDF
+            doc.save('exam_timetable.pdf');
+        }
+    </script>
+</body>
+</html>

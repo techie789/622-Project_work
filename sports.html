@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Sports Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #f8f9fa;
+            --dark: #1a1a2e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.97);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 60px;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+
+        .menu-icon {
+            display: none;
+            cursor: pointer;
+        }
+
+        /* Sports Hero Section */
+        .sports-hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+                        url('https://images.unsplash.com/photo-1541252260730-0412e8e2108e?auto=format&fit=crop&w=1950&q=80');
+            height: 60vh;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 80px;
+        }
+
+        .hero-content {
+            text-align: center;
+            color: white;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Sports Grid */
+        .sports-grid {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .sport-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin: 4rem 0;
+            align-items: center;
+        }
+
+        .sport-card:nth-child(even) .sport-image {
+            order: 2;
+        }
+
+        .sport-image {
+            height: 400px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .sport-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .sport-image:hover img {
+            transform: scale(1.05);
+        }
+
+        .sport-info {
+            padding: 2rem;
+        }
+
+        .sport-info h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+
+        .sport-highlights {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+
+        .sport-highlights li {
+            padding: 0.8rem 0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--primary);
+            color: white;
+            padding: 4rem 2rem;
+            margin-top: 6rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            color: var(--secondary);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            margin-bottom: 0.8rem;
+            display: block;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: var(--secondary);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        @media (max-width: 768px) {
+            .menu-icon {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 2rem;
+                text-align: center;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .sport-card {
+                grid-template-columns: 1fr;
+            }
+
+            .sport-image {
+                height: 300px;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="https://via.placeholder.com/150x60.png?text=College+Logo" alt="College Logo">
+            </a>
+
+            <div class="nav-links">
+                <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                <a href="Activities.html">Activities</a>
+              <a href="Vision.html">Vision</a>
+                <a href="PhotoGallery.html">Gallery</a>
+                <a href="AdmissionGuidelines.html">Admission</a>
+                <a href="Results.html">Results</a>
+                <a href="ExaminationTimetable.html">Exam</a>
+                <a href="VacationandHolidays.html">Vacation</a>
+                <a href="Achievement.html">Achievements</a>
+                <a href="ContactUs.html">Contact Us</a>
+            </div>
+            <span class="menu-icon"><i class="fas fa-bars"></i></span>
+        </nav>
+    </header>
+
+    <!-- Sports Hero -->
+    <section class="sports-hero">
+        <div class="hero-content">
+            <h1>University Sports</h1>
+            <p>Where Champions Are Made</p>
+        </div>
+    </section>
+
+    <!-- Sports Content -->
+    <main class="sports-grid">
+        <!-- Cricket -->
+        <article class="sport-card">
+            <div class="sport-image">
+                <img src="https://media.gettyimages.com/id/166080748/vector/cricket-player-strikes-the-ball-for-six.jpg?s=612x612&w=gi&k=20&c=V-kwBs62Vum3JsjZTDYTsXeyvA1Q0-ECKwuq8m39hTg=" alt="Cricket">
+            </div>
+            <div class="sport-info">
+                <h2>Cricket Team</h2>
+                <p>Our championship-winning cricket team offers:</p>
+                <ul class="sport-highlights">
+                    <li><i class="fas fa-trophy"></i> Professional coaching staff</li>
+                    <li><i class="fas fa-calendar-alt"></i> Inter-university tournaments</li>
+                    <li><i class="fas fa-users"></i> State-of-the-art facilities</li>
+                    <li><i class="fas fa-medal"></i> Scholarship opportunities</li>
+                </ul>
+            </div>
+        </article>
+
+        <!-- Football -->
+        <article class="sport-card">
+            <div class="sport-image">
+                <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=1950&q=80" alt="Football">
+            </div>
+            <div class="sport-info">
+                <h2>Football Club</h2>
+                <p>Join our premier football program:</p>
+                <ul class="sport-highlights">
+                    <li><i class="fas fa-running"></i> Daily training sessions</li>
+                    <li><i class="fas fa-shield-alt"></i> Modern safety equipment</li>
+                    <li><i class="fas fa-globe"></i> National level competitions</li>
+                    <li><i class="fas fa-user-graduate"></i> Academic support</li>
+                </ul>
+            </div>
+        </article>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="AdmissionGuidelines.html">Admissions</a></li>
+                    <li><a href="Results.html">Results</a></li>
+                    <li><a href="ExaminationTimetable.html">Exams</a></li>
+                    <li><a href="ContactUs.html">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Sports</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Cricket</a></li>
+                    <li><a href="#">Football</a></li>
+                    <li><a href="#">Basketball</a></li>
+                    <li><a href="#">Athletics</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Connect With Us</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+                <p>Email: sports@university.edu</p>
+                <p>Phone: (555) 123-4567</p>
+            </div>
+        </div>
+
+        <div class="copyright">
+            <p>© 2025 CyberX_Company, Inc. All rights reserved.</p>
+            <p>Empowering Students Through Sports Excellence</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const menuIcon = document.querySelector('.menu-icon');
+        const navLinks = document.querySelector('.nav-links');
+
+        menuIcon.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!navLinks.contains(e.target) && !menuIcon.contains(e.target)) {
+                navLinks.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
