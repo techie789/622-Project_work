@@ -14,76 +14,345 @@
     <link rel="stylesheet" href="css/main_style.css">
 
 
+
+<style>
+    /* Base Styles */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        line-height: 1.6;
+    }
+
+    /* Navigation */
+    .navbar {
+        background: #2c3e50;
+        padding: 1rem 2rem;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .nav-links {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .nav-links a {
+        color: #ecf0f1;
+        text-decoration: none;
+        padding: 0.8rem 1.2rem;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+    }
+
+    .nav-links a:hover {
+        background: #34495e;
+        transform: translateY(-2px);
+    }
+
+    /* Contact Container */
+    .contact-container {
+        max-width: 1200px;
+        margin: 4rem auto;
+        padding: 2rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+    }
+
+    /* Contact Cards */
+    .contact-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .contact-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .contact-info {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .icon-wrapper {
+        width: 60px;
+        height: 60px;
+        background: #3498db;
+        border-radius: 50%;
+        margin: 0 auto 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .icon-wrapper i {
+        color: white;
+        font-size: 1.5rem;
+    }
+
+    /* Contact Form */
+    .contact-form {
+        background: white;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #2c3e50;
+        font-weight: 600;
+    }
+
+    input, textarea {
+        width: 100%;
+        padding: 0.8rem;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border-color 0.3s ease;
+    }
+
+    input:focus, textarea:focus {
+        outline: none;
+        border-color: #3498db;
+    }
+
+    button {
+        background: #3498db;
+        color: white;
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        width: 100%;
+    }
+
+    button:hover {
+        background: #2980b9;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(52,152,219,0.3);
+    }
+
+    /* Map Section */
+    .map-section {
+        margin-top: 3rem;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    
+    /* Footer */
+    footer {
+        background: #2c3e50;
+        color: #ecf0f1;
+        padding: 2rem;
+        margin-top: 4rem;
+    }
+
+    .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+    }
+
+    .footer-section h3 {
+        color: #3498db;
+        margin-bottom: 1rem;
+    }
+
+    .footer-section a {
+        color: #bdc3c7;
+        text-decoration: none;
+        display: block;
+        margin: 0.5rem 0;
+        transition: color 0.3s ease;
+    }
+
+    .footer-section a:hover {
+        color: #3498db;
+    }
+
+    .social-links {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+    .social-links a {
+        font-size: 1.5rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .nav-links {
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .contact-container {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <section class="header">
-        <nav>
-            <a href="index.html"><img src="image/logo.png" id="logo-img"></a>
-            
-            <div class="nav-links" id="navLinks">
+<!-- Navigation -->
+<section class="header">
+    <nav>
+        <a href="index.html"><img src="image/logo.png" id="logo-img " width="120" height="auto"></a>
 
-                <span class="icon" onclick="hidemenu()">&#10005;</span>
-                <ul>
-                    <ul class="nav-links">
-                        <li> <a href="index.html"></i> Home</a></li>
-                        <li><a href="Vision.html">Vision</a></li>
-                        <li><a href="PhotoGallery.html">Gallery</a></li>
-                        <li><a href="AdmissionGuidelines.html">Admission</a></li>
-                        <li><a href="Results.html">Results</a></li>
-                        <li><a href="ExaminationTimetable.html">Exam</a></li>
-                        <li><a href="VacationandHolidays.html">Vacation</a></li>
+        <div class="nav-links" id="navLinks">
 
-                    </ul>
+            <span class="icon" onclick="hidemenu()">&#10005;</span>
+            <ul>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="Activities.html">Activities</a></li>
+                    <li><a href="AdmissionGuidelines.html">Admission</a></li>
+                    <li><a href="Results.html">Results</a></li>  
+                    <li><a href="Achievement.html">Achievements</a></li>
+                
                 </ul>
-            </div> 
-            <span class="icon" onclick="showmenu()">&#9776;</span>
-        </nav>
-        <div class="wrapper">
-		<div class="r_form_wrap">
-			
-			<div class="title">
-				<p>Contact form</p>
-			</div>
-			
-			<!-- Admission from -->
-			<div class="r_form">
-				<form method="post" onsubmit="sendmail(); reset(); return false;">
-					<div class="input_wrap">
-						<label for="yourname">Your Name</label>
-						<div class="input_item">
-							<i class="fa fa-user" id="icon"></i>
-							<input type="text" name="your name" class="input" id="yourname" placeholder="Enter the name" required>
-						</div>
-					</div>
-					<div class="input_wrap">
-						<label for="emailaddress">Email Address</label>
-						<div class="input_item">
-							<i class="fa fa-envelope" id="icon"></i>
-							<input type="email" name="email address" class="input" id="emailaddress" placeholder="Enter the Email ID" required>
-						</div>
-					</div>
+            </ul>
+        </div> 
+        <span class="icon" onclick="showmenu()">&#9776;</span>
+    </nav>
 
-					<div class="input_wrap">
-						<label for="phone">Phone</label>
-						<div class="input_item">
-							<i class="fa fa-commenting" id="icon"></i>
-                            <textarea name="phone" class="mess" id="phone" placeholder="Write your message..." size="500"></textarea>
-						</div>
-					</div>
-					
-	
-					<input type="submit" class="button" value="Send Message">
-					<div ></div>
-					<input type="reset" class="clear_ad" value="Clear">
-					
-				</form>
-			</div>
+<!-- Main Content -->
+<div class="contact-container">
+    <!-- Contact Information -->
+    <div class="contact-card">
+        <div class="contact-info">
+            <div class="icon-wrapper">
+                <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <h2>Visit Us</h2>
+            <p>123 Education Boulevard<br>
+            Knowledge City, LN 45678<br>
+            Open Hours: Mon-Fri 8AM-6PM</p>
         </div>
-        </div>
-    </section>
 
-    <div class="none_div"></div>
-   
+        <div class="contact-info">
+            <div class="icon-wrapper">
+                <i class="fas fa-phone-alt"></i>
+            </div>
+            <h2>Call Us</h2>
+            <p>+1 (555) 123-4567<br>
+            +1 (555) 890-1234<br>
+            Emergency: 24/7 Support</p>
+        </div>
+
+        <div class="contact-info">
+            <div class="icon-wrapper">
+                <i class="fas fa-envelope"></i>
+            </div>
+            <h2>Email Us</h2>
+            <p>info@smartlearn.com<br>
+            support@smartlearn.com<br>
+            admissions@smartlearn.com</p>
+        </div>
+    </div>
+
+    <!-- Contact Form -->
+    <div class="contact-form">
+        <h2 style="color: #2c3e50; margin-bottom: 1.5rem;">Get in Touch</h2>
+        <form id="contactForm">
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" placeholder="John Doe" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="john@example.com" required>
+            </div>
+
+            <div class="form-group">
+                <label for="subject">Subject</label>
+                <input type="text" id="subject" name="subject" placeholder="Course Inquiry" required>
+            </div>
+
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="5" placeholder="Your message..." required></textarea>
+            </div>
+
+            <button type="submit">Send Message <i class="fas fa-paper-plane"></i></button>
+        </form>
+    </div>
+</div>
+
+<!-- Map Section -->
+<div class="map-section">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3502.376646763057!2d77.123456!3d28.654321!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjjCsDM5JzE1LjYiTiA3N8KwMDcnMjguNiJF!5e0!3m2!1sen!2sin!4v1234567890123!5m2!1sen!2sin" 
+            width="100%" 
+            height="400" 
+            style="border:0;" 
+            allowfullscreen="" 
+            loading="lazy">
+    </iframe>
+</div>
+
+
+
+
+<script>
+    // Form Validation
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Add your form submission logic here
+        alert('Thank you for your message! We will respond within 24 hours.');
+        this.reset();
+    });
+
+    // Add smooth scroll behavior
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+
+    // Add animation on scroll
+    window.addEventListener('scroll', function() {
+        const elements = document.querySelectorAll('.contact-card, .testimonial-card');
+        elements.forEach(element => {
+            const elementTop = element.getBoundingClientRect().top;
+            const windowHeight = window.innerHeight;
+            
+            if (elementTop < windowHeight * 0.8) {
+                element.style.opacity = '1';
+                element.style.transform = 'translateY(0)';
+            }
+        });
+    });
+</script>
 
     <!-- Foooter -->
 <section class="bg-white">
@@ -161,7 +430,7 @@
 <script>
     function sendmail(){
 		Email.send({}).then(
-	message => alert("Your Message Is Successful - Team GGU")
+	message => alert("Your Message Is Successful")
 );
 		}
     </script>
