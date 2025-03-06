@@ -29,7 +29,7 @@ Create the following subpages with relevant content and layout:
 
 ### 🌐 Activity 3: Hosting the Website.
 - The website is hosted on a **free web hosting server**.
-- You can access the live site via [Your Hosting URL Here](#).
+- You can access the live site via [ https://techie789.github.io/622-Project_work/ ](#).
 - Alternatively, you can deploy it using **GitHub Pages**.
 
 ---
